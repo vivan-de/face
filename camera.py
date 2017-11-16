@@ -1,6 +1,6 @@
 import cv2
 import time
-import thread
+import _thread
 import facerec as face
 from PIL import Image
 
@@ -49,7 +49,7 @@ class VideoCamera(object):
             self.anterior = len(faces)
 
         if faces is not () and (time.time() - self.ptime) > 10.0:
-            thread.start_new_thread(ama, (image,))
+            _thread.start_new_thread(ama, (image,))
             self.ptime = time.time()
             print("Checking face")
         return jpeg.tobytes()

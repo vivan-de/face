@@ -1,9 +1,31 @@
 <html>
   <head>
-    <title>Video Streaming Demonstration</title>
+    <title>Blue</title>
   </head>
   <body>
-    <h1>Video Streaming Demonstration</h1>
+    <h1 id="myH1">Blue Video Feed</h1>
     <img id="bg" src="{{ url_for('video_feed') }}">
+    <div id="myDIV"></div>
+    
+    <script>
+	console.log("Script")
+	if(typeof(EventSource) !== "undefined") {
+		var source = new EventSource("http://192.168.2.4/message.php");
+		source.onopen = function() {
+			console.log("Hitting open")
+			document.getElementById("myH1").innerHTML = "Getting server updates";
+		};
+
+		source.onmessage = function(event) {
+			console.log("Hit message");
+			document.getElementById("myDIV").innerHTML += event.data + "<br>";
+			window.scrollBy(0, 50);
+		};
+	} else {
+		document.getElementById("myDIV").innerHTML = 
+			"Sorry, your browser does not support server-sent events...";
+	}
+    </script>
+  
   </body>
 </html>
